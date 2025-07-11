@@ -1,0 +1,47 @@
+services:
+ apipedidos: #Nome do serviço
+   container_name: springboot-apiPedidos
+   build:
+     context: .   #Raiz do projeto	
+     dockerfile: Dockerfile   #Ler o arquivo dockerfile
+   ports:
+     - "8081:8081"  # Portas externa (Windows) e interna (docker)
+   networks:
+     - apiPedidos-network   # Nome da rede compartilhada
+   depends_on:
+     - postgres  # Nome do serviço que precisamos aguardar
+     - rabbitmq  # Nome do serviço que precisamos aguardar
+   environment:
+     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bd_apipedidos   								           
+ postgres: # Nome do serviço
+   image: postgres:16 # Imagem oficial do postgresql versão 16
+   container_name: api-pedidos-postgresql # Nome do container
+   restart: always # Sempre reiniciar o servidor
+   environment:
+     POSTGRES_DB: bd_apipedidos # Nome do banco de dados
+     POSTGRES_USER: usuario_apipedidos # Usuário do banco de dados
+     POSTGRES_PASSWORD: senha_apipedidos # Senha do usuário
+   ports:
+     - "5433:5432" # Porta externa (Windows) : Porta interna (Docker)
+   networks:
+     - apiPedidos-network # Nome da rede compartilhada
+   volumes:
+     - postgres-data:/var/lib/postgresql/data # Local para armazenar os dados dentro do container
+ rabbitmq: # Nome do serviço
+   image: rabbitmq:3-management # Imagem oficial do rabbitmq 3
+   container_name: rabbitmq-apiPedidos # Nome do container
+   restart: always # Sempre reiniciar o servidor
+   environment:
+     RABBITMQ_DEFAULT_USER: pedidosuser # Usuário do servidor
+     RABBITMQ_DEFAULT_PASS: pedidospassword #Senha do usuário
+   ports:
+     - "5672:5672"     # Porta para comunicação entre aplicações
+     - "15672:15672"   # Porta do painel de administração (UI)
+   networks:
+     - apiPedidos-network # Nome da rede compartilhada
+networks:
+ apiPedidos-network: # Nome da rede
+   driver: bridge # Rede compartilhada
+volumes:
+ postgres-data: #Registrando o local para armazenamento dos dados
+
