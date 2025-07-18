@@ -21,7 +21,7 @@ public class OutboxMessage {
 	private String aggregateType;   // Ex: Pedido  (nome da origem do evento)	
 	private String aggregateId;     // Ex: Pedido  (nome da origem do evento)	
 	private String type;		    // Tipo do evento (Ex: "PedidoCriado")	
-	private String payLoad;			// Dados do evento em JSON transmitidos p/ a fila
+	private String payload;			// Dados do evento em JSON transmitidos p/ a fila
 	
 	private boolean published = false;
 	

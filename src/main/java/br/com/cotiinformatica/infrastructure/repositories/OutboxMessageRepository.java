@@ -1,11 +1,12 @@
 package br.com.cotiinformatica.infrastructure.repositories;
 
-import java.awt.print.Pageable;
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import br.com.cotiinformatica.infrastructure.outbox.OutboxMessage;
 
 @Repository
@@ -22,5 +23,5 @@ public interface OutboxMessageRepository extends JpaRepository<OutboxMessage, Lo
    	        AND o.type = :type 
    	        ORDER BY o.createdAt ASC  
 	""")	
-	List<OutboxMessage> find(@Param("type") String type, Pageable pageable);		
+	List<OutboxMessage> find(@Param("type") String type, org.springframework.data.domain.Pageable pageable);		
 }

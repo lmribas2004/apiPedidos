@@ -12,7 +12,8 @@ services:
      - postgres  # Nome do serviço que precisamos aguardar
      - rabbitmq  # Nome do serviço que precisamos aguardar
    environment:
-     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bd_apipedidos   								           
+     SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bd_apipedidos
+     SPRING_RABBITMQ_HOST: rabbitmq	    								              
  postgres: # Nome do serviço
    image: postgres:16 # Imagem oficial do postgresql versão 16
    container_name: api-pedidos-postgresql # Nome do container
